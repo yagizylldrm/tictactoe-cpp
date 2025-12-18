@@ -112,8 +112,18 @@ int main()
     titleScreen();
     char mark;
 
-    cout << YELLOW << "Player 1! Choose your marker (X or O): " << RESET;
-    cin >> mark;
+    while (true)
+    {
+        cout << YELLOW << "Player 1! Choose your marker (X or O): " << RESET;
+        cin >> mark;
+
+        if (mark == 'X' || mark == 'O')
+            break;
+
+        else
+            cout << "Wrong choice! Please enter only 'X' or 'O'." << endl;
+    }
+
     cin.ignore(1000, '\n');
     TicTacToe game(mark);
 
