@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #define BOARD_SIZE 3
 #define RED "\x1B[31m"
@@ -8,6 +9,7 @@
 #define RESET "\x1B[0m"
 
 using namespace std;
+
 class TicTacToe
 {
 private:
@@ -17,7 +19,8 @@ private:
 
 public:
     TicTacToe(char a) : cur_mark(a), cur_player(1) {}
-    ~TicTacToe() { cout << "\nGame over!" << endl; }
+
+    ~TicTacToe() { cout << GREEN << "\nGame over!" << RESET << endl; }
 
     friend void titleScreen();
 
@@ -90,6 +93,7 @@ public:
     }
 
     int getPlayer() { return cur_player; }
+
     char getMark() { return cur_mark; }
 };
 
@@ -111,10 +115,14 @@ int main()
 {
     titleScreen();
     char mark;
-
+    string p1, p2;
     while (true)
     {
-        cout << YELLOW << "Player 1! Choose your marker (X or O): " << RESET;
+        cout << YELLOW << "Enter nickname for Player 1: " << RESET;
+        getline(cin, p1);
+        cout << YELLOW << "Enter nickname for Player 2: " << RESET;
+        getline(cin, p2);
+        cout << YELLOW << p1 << "! Choose your marker (X or O): " << RESET;
         cin >> mark;
 
         if (mark == 'X' || mark == 'O')
@@ -133,7 +141,7 @@ int main()
     {
         int place;
         string color = (game.getPlayer() == 1) ? RED : BLUE;
-        cout << color << "Player " << game.getPlayer() << YELLOW << "'s turn. Enter a place to put your marker: " << RESET;
+        cout << color << ((game.getPlayer() == 1) ? p1 : p2) << YELLOW << "'s turn. Enter a place to put your marker: " << RESET;
         cin >> place;
 
         if (place < 1 || place > 9 || !game.placeMarker(place))
@@ -147,7 +155,7 @@ int main()
         if (game.winner() != 0)
         {
             cout << GREEN << "============================" << endl;
-            cout << "   PLAYER " << game.getPlayer() << " IS THE WINNER!  " << endl;
+            cout << ((game.getPlayer() == 1) ? p1 : p2) << " IS THE WINNER!  " << endl;
             cout << "============================" << RESET << endl;
             return 0;
         }
